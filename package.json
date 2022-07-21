@@ -1,6 +1,6 @@
 {
   "name": "whatsminer-api",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Whatsminer machine API",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
@@ -9,13 +9,11 @@
     "import": "./dist/index.esm.js",
     "require": "./dist/index.cjs"
   },
+  "type": "module",
   "scripts": {
     "build": "node build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Eric R. Perez",
-  "license": "ISC",
-  "type": "module",
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
     "@types/node": "^18.0.4",
