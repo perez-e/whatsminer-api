@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Whatsminer machine API",
   "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "exports": {
-    "types": "./dist/index.d.ts",
+    "types": "./dist/types/index.d.ts",
     "import": "./dist/index.esm.js",
     "require": "./dist/index.cjs"
   },
@@ -13,7 +13,7 @@
   "files": ["dist/*"],
   "license": "MIT",
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.js && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
