@@ -1,13 +1,5 @@
 import { build } from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
-import dts from 'npm-dts';
-
-const { Generator } = dts;
-
-new Generator({
-  entry: 'src/index.ts',
-  output: 'dist/index.d.ts',
-}).generate();
 
 const config = {
   entryPoints: ['./src/index.ts'],
