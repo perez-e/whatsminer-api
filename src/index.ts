@@ -22,6 +22,170 @@ type WhatsminerResponse<Msg> = {
   Description: string;
 };
 
+type WhatsminerSummaryResponse = {
+  STATUS: WhatsminerResponse<string>[];
+  SUMMARY: {
+    Elapsed: number;
+    'MHS av': number; // Average hash rate of miner(MHS)
+    'MHS 5s': number;
+    'MHS 1m': number;
+    'MHS 5m': number;
+    'MHS 15m': number;
+    'HS RT': number;
+    'Found Blocks': number;
+    Getworks: number;
+    Accepted: number;
+    Rejected: number;
+    'Hardware Errors': number;
+    Utility: number;
+    Discarded: number;
+    Stale: number;
+    'Get Failures': number;
+    'Local Work': number;
+    'Remote Failures': number;
+    'Network Blocks': number;
+    'Total MH': number;
+    'Work Utility': number;
+    'Difficulty Accepted': number;
+    'Difficulty Rejected': number;
+    'Difficulty Stale': number;
+    'Best Share': number;
+    Temperature: number;
+    freq_avg: number;
+    'Fan Speed In': number; // Air inlet Fan speed(RPM)
+    'Fan Speed Out': number; // Air outlet fan speed(RPM)
+    Voltage: number;
+    Power: number; // Input power(W)
+    Power_RT: number;
+    'Power Rate': number;
+    'Device Hardware%': number;
+    'Device Rejected%': number;
+    'Pool Rejected%': number;
+    'Pool Stale%': number;
+    'Last getwork': number;
+    Uptime: number; // System up time(second)
+    'Power Current': number;
+    'Power Fanspeed': number;
+    'Error Code Count': number;
+    'Factory Error Code Count': number;
+    'Security Mode': number;
+    'Liquid Cooling': boolean;
+    'Hash Stable': boolean;
+    'Target Freq': number;
+    'Target MHS': number;
+    'Env Temp': number;
+    'Power Mode': string; // Power mode (Low/Normal/High)
+    'Firmware Version': string;
+    MAC: string;
+    'Factory GHS': number; // Factory hash rate(GHS)
+    'Power Limit': number;
+    'Chip Temp Min': number;
+    'Chip Temp Max': number;
+    'Chip Temp Avg': number;
+    Debug: string;
+    'Btminer Fast Boot': string;
+  }[];
+};
+
+type WhatsminerPoolsResponse = {
+  STATUS: WhatsminerResponse<string>[];
+  POOLS: {
+    POOL: number;
+    URL: string;
+    Status: string; // Pool status
+    Priority: number; // Pool priority(0 highest)
+    Quota: number; // Pool default strategy is 1
+    'Long Poll': string;
+    Getworks: number;
+    Accepted: number; // Accepted nonces by the pool
+    Rejected: number; // Rejected nonces by the pool
+    Works: number;
+    Discarded: number;
+    Stale: number;
+    'Get Failures': number;
+    'Remote Failures': number;
+    User: string; // Miner name
+    'Last Share Time': number; // Last nonce submission time
+    'Diff1 Shares': number;
+    'Proxy Type': string;
+    Proxy: string;
+    'Difficulty Accepted': number;
+    'Difficulty Rejected': number;
+    'Difficulty Stale': number;
+    'Last Share Difficulty': number;
+    'Work Difficulty': number;
+    'Has Stratum': number;
+    'Stratum Active': boolean; // Pool stratumstatus
+    'Stratum URL': string; // Pool address
+    'Stratum Difficulty': number; // Pool dif iculty
+    'Has GBT': boolean;
+    'Best Share': number;
+    'Pool Rejected%': number; // Pool rejection percent
+    'Pool Stale%': number;
+    'Bad Work': number;
+    'Current Block Height': number; // Current Block Height
+    'Current Block Version': number; // Current Block Version
+  }[];
+};
+
+type WhatsminerDevResponse = {
+  STATUS: WhatsminerResponse<string>[];
+  DEVS: {
+    ASC: number;
+    Name: string;
+    ID: number;
+    Slot: number; // Hash board slot number
+    Enabled: string;
+    Status: string;
+    Temperature: number; // Board temperature at air outlet (℃)
+    'Chip Frequency': number; // Average frequency of chips in hash board (MHz)
+    'Fan Speed In': number;
+    'Fan Speed Out': number;
+    'MHS av': number; // Average hash rate of hash board (MHS)
+    'MHS 5s': number;
+    'MHS 1m': number;
+    'MHS 5m': number;
+    'MHS 15m': number;
+    'HS RT': number;
+    Accepted: number;
+    Rejected: number;
+    'Hardware Errors': number;
+    Utility: number;
+    'Last Share Pool': number;
+    'Last Share Time': number;
+    'Total MH': number;
+    'Diff1 Work': number;
+    'Difficulty Accepted': number;
+    'Difficulty Rejected': number;
+    'Last Share Difficulty': number;
+    'Last Valid Work': number;
+    'Device Hardware%': number;
+    'Device Rejected%': number;
+    'Device Elapsed': number;
+    'Upfreq Complete': number;
+    'Effective Chips': number;
+    'PCB SN': string; // PCB serial number
+    'Chip Data': string;
+    'Chip Temp Min': number;
+    'Chip Temp Max': number;
+    'Chip Temp Avg': number;
+    chip_vol_diff: number;
+  }[];
+};
+
+type WhatsminerDevdetailResponse = {
+  STATUS: WhatsminerResponse<string>[];
+  DEVDETAILS: {
+    // Hashboard detail
+    DEVDETAILS: number;
+    Name: string;
+    ID: number;
+    Driver: string;
+    Kernel: string;
+    Model: string;
+  }[];
+};
+
 type TokenMsg = {
   time: string;
   salt: string;
@@ -153,7 +317,7 @@ type PrePowerOnParams = {
 export const summary = async ({
   host,
   port,
-}: ConnectionParams): Promise<WhatsminerResponse<object>> => {
+}: ConnectionParams): Promise<WhatsminerSummaryResponse> => {
   const client = await connect({ host, port });
   return write(client, apiCommand('summary'));
 };
@@ -161,7 +325,7 @@ export const summary = async ({
 export const pools = async ({
   host,
   port,
-}: ConnectionParams): Promise<WhatsminerResponse<object>> => {
+}: ConnectionParams): Promise<WhatsminerPoolsResponse> => {
   const client = await connect({ host, port });
   return write(client, apiCommand('pools'));
 };
@@ -169,7 +333,7 @@ export const pools = async ({
 export const edevs = async ({
   host,
   port,
-}: ConnectionParams): Promise<WhatsminerResponse<object>> => {
+}: ConnectionParams): Promise<WhatsminerDevResponse> => {
   const client = await connect({ host, port });
   return write(client, apiCommand('edevs'));
 };
@@ -177,7 +341,7 @@ export const edevs = async ({
 export const devdetails = async ({
   host,
   port,
-}: ConnectionParams): Promise<WhatsminerResponse<object>> => {
+}: ConnectionParams): Promise<WhatsminerDevdetailResponse> => {
   const client = await connect({ host, port });
   return write(client, apiCommand('devdetails'));
 };
