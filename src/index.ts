@@ -236,7 +236,7 @@ export const updatePools = async ({
   port,
   passwd,
   ...params
-}: PoolParams): Promise<WhatsminerResponse<object>> => {
+}: PoolParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -257,7 +257,7 @@ export const restartBtminer = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -316,7 +316,7 @@ export const setLED = async ({
   port,
   passwd,
   ...params
-}: LEDParams): Promise<WhatsminerResponse<object>> => {
+}: LEDParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -333,7 +333,7 @@ export const powerMode = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -372,7 +372,7 @@ export const reboot = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -389,7 +389,7 @@ export const factoryReset = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -431,7 +431,7 @@ export const netConfig = async ({
   port,
   passwd,
   ...params
-}: NetConfigParams): Promise<WhatsminerResponse<object>> => {
+}: NetConfigParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -477,7 +477,7 @@ export const setTargetFrequency = async ({
   port,
   passwd,
   ...params
-}: FrequencyParams): Promise<WhatsminerResponse<object>> => {
+}: FrequencyParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -498,7 +498,7 @@ export const enableFastboot = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -519,7 +519,7 @@ export const disableFastboot = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -540,7 +540,7 @@ export const enableWebpools = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -561,7 +561,7 @@ export const disableWebpools = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: Required<ConnectionParams>): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -582,7 +582,7 @@ export const setHostname = async ({
   port,
   passwd,
   ...params
-}: HostnameParams): Promise<WhatsminerResponse<object>> => {
+}: HostnameParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -603,7 +603,7 @@ export const setZone = async ({
   port,
   passwd,
   ...params
-}: ZoneParams): Promise<WhatsminerResponse<object>> => {
+}: ZoneParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -620,7 +620,7 @@ export const loadLog = async ({
   port,
   passwd,
   ...params
-}: LogParams): Promise<WhatsminerResponse<object>> => {
+}: LogParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -637,7 +637,7 @@ export const setPowerPct = async ({
   port,
   passwd,
   ...params
-}: PowerPercentParams): Promise<WhatsminerResponse<object>> => {
+}: PowerPercentParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -658,7 +658,7 @@ export const prePowerOn = async ({
   port,
   passwd,
   ...params
-}: PrePowerOnParams): Promise<WhatsminerResponse<object>> => {
+}: PrePowerOnParams): Promise<WhatsminerResponse<string>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
