@@ -235,7 +235,6 @@ export const updatePools = async ({
   host,
   port,
   passwd,
-  pool1,
   ...params
 }: PoolParams): Promise<WhatsminerResponse<object>> => {
   const {
@@ -279,7 +278,7 @@ export const powerOff = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: PowerOffParams): Promise<WhatsminerResponse<object>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
@@ -300,7 +299,7 @@ export const powerOn = async ({
   port,
   passwd,
   ...params
-}: Required<ConnectionParams>): Promise<WhatsminerResponse<object>> => {
+}: PowerOnParams): Promise<WhatsminerResponse<object>> => {
   const {
     Msg: { time, salt, newsalt },
   } = await getToken({ host, port });
