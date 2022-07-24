@@ -1,6 +1,6 @@
 {
   "name": "whatsminer-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Whatsminer machine API",
   "main": "./dist/index.cjs",
   "types": "./dist/types/index.d.ts",
@@ -10,7 +10,9 @@
     "require": "./dist/index.cjs"
   },
   "type": "module",
-  "files": ["dist/*"],
+  "files": [
+    "dist/*"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "node build.js && tsc",
