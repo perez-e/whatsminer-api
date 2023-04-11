@@ -2,6 +2,18 @@ import net from 'node:net';
 import crypto from 'node:crypto';
 import { exec as originalExec } from 'node:child_process';
 import { promisify } from 'node:util';
+import fs from 'node:fs';
+
+const formatDateTime = (dateTime: Date) => {
+  const year = dateTime.getFullYear();
+  const month = String(dateTime.getMonth() + 1).padStart(2, '0');
+  const day = String(dateTime.getDate()).padStart(2, '0');
+  const hour = String(dateTime.getHours()).padStart(2, '0');
+  const minute = String(dateTime.getMinutes()).padStart(2, '0');
+  const seconds = String(dateTime.getSeconds()).padStart(2, '0');
+
+  return `${year}${month}${day}${hour}${minute}${seconds}`;
+};
 
 export const connect = ({
   host,
@@ -40,6 +52,35 @@ export const write = async <T>(
   } else {
     return _write(client, msg);
   }
+};
+
+export const fetchLogs = async <T>(
+  client: net.Socket,
+  msg: object,
+  key: string,
+  output?: string,
+): Promise<T> => {
+  const apiCmd = { enc: 1, data: cipherAes256(msg, key).toString('base64') };
+  const filename = output
+    ? `${output}.tar.gz`
+    : `${formatDateTime(new Date())}.tar.gz`;
+  const file = fs.createWriteStream(filename);
+  let response: T;
+
+  return new Promise((resolve, _reject) => {
+    client.once('data', (data) => {
+      const { enc } = JSON.parse(data.toString());
+      response = JSON.parse(decipherAes256(enc, key));
+      client.pipe(file);
+    });
+
+    client.on('end', () => {
+      file.close();
+      resolve(response);
+    });
+
+    client.write(JSON.stringify(apiCmd));
+  });
 };
 
 const exec = promisify(originalExec);
