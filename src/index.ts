@@ -1,4 +1,4 @@
-import { connect, write, md5PasswdHash } from './utils.js';
+import { connect, write, md5PasswdHash, fetchLogs } from './utils.js';
 
 const apiCommand = (cmd: string, params = {}) => ({ cmd, ...params });
 
@@ -257,6 +257,14 @@ type PowerOffParams = {
 type PowerOnParams = {
   respbefore: 'true' | 'false';
 } & Required<ConnectionParams>;
+
+type DownloadLogsParams = {
+  output: string;
+} & Required<ConnectionParams>;
+
+type DownloadLogsMsg = {
+  logilelen: String;
+};
 
 type LEDParams =
   | ({
@@ -611,30 +619,28 @@ export const netConfig = async ({
   );
 };
 
-// TODO: support downloading logs
-// export const downloadLogs = async ({ host, port, passwd, ...params }: ConnectionParams) => {
-//   const {
-//     Msg: { time, salt, newsalt },
-//   } = await getToken({ host, port });
+export const downloadLogs = async ({
+  host,
+  port,
+  passwd,
+  output,
+  ...params
+}: DownloadLogsParams): Promise<WhatsminerResponse<DownloadLogsMsg>> => {
+  const {
+    Msg: { time, salt, newsalt },
+  } = await getToken({ host, port });
+  const key = await md5PasswdHash({ salt, passwd });
+  const sign = await md5PasswdHash({ salt: newsalt, passwd: key + time });
 
-//   const key = await md5PasswdHash({ salt, passwd });
-//   const sign = await md5PasswdHash({ salt: newsalt, passwd: key + time });
+  const client = await connect({ host, port });
 
-//   const client = await connect({ host, port });
-
-//   const { enc, file } = await fetchLog(client, {
-//     enc: 1,
-//     data: cipherAes256(
-//       apiCommand('download_logs', { token: sign, ...params }),
-//       key,
-//     ).toString('base64'),
-//   });
-
-//   return {
-//     resp: JSON.parse(decipherAes256(enc, key)),
-//     file,
-//   };
-// };
+  return fetchLogs(
+    client,
+    apiCommand('download_logs', { token: sign, ...params }),
+    key,
+    output,
+  );
+};
 
 export const setTargetFrequency = async ({
   host,
