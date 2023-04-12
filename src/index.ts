@@ -263,7 +263,7 @@ type DownloadLogsParams = {
 } & Required<ConnectionParams>;
 
 type DownloadLogsMsg = {
-  logilelen: String;
+  logilelen: string;
 };
 
 type LEDParams =
