@@ -88,9 +88,6 @@ const exec = promisify(originalExec);
 const sha256 = (x: string) =>
   crypto.createHash('sha256').update(Buffer.from(x)).digest();
 
-const pad16Buff = (apiCmd: string) =>
-  Buffer.from(apiCmd + Buffer.alloc(16 - (apiCmd.length % 16), '\0'));
-
 export const md5PasswdHash = async ({
   salt,
   passwd,
@@ -106,11 +103,9 @@ export const md5PasswdHash = async ({
 
 const cipherAes256 = (apiCmd: object, key: string) => {
   const aeskey = sha256(key);
-  const apiBuff = pad16Buff(JSON.stringify(apiCmd));
   const cipher = crypto.createCipheriv('aes-256-ecb', aeskey, null);
-  cipher.setAutoPadding(false);
 
-  return Buffer.concat([cipher.update(apiBuff), cipher.final()]);
+  return Buffer.concat([cipher.update(JSON.stringify(apiCmd)), cipher.final()]);
 };
 
 const decipherAes256 = (enc: string, key: string) => {
