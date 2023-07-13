@@ -22,10 +22,10 @@ export const connect = ({
   host: string;
   port: number;
 }): Promise<net.Socket> =>
-  new Promise((resolve, _reject) => {
-    const client: net.Socket = net.connect({ host, port }, () =>
-      resolve(client),
-    );
+  new Promise((resolve, reject) => {
+    const client: net.Socket = net
+      .connect({ host, port }, () => resolve(client))
+      .on('error', reject);
   });
 
 const _write = <T>(client: net.Socket, msg: object): Promise<T> =>
